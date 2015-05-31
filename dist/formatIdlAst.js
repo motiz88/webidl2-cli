@@ -10,15 +10,17 @@ _Object$defineProperty(exports, '__esModule', {
     value: true
 });
 
-exports['default'] = notImplemented;
+exports['default'] = formatIdlAst;
 
 var _rx = require('rx');
 
 var _rx2 = _interopRequireDefault(_rx);
 
-function notImplemented(node, reason) {
-    return _rx2['default'].Observable.of('/* Not implemented: ' + (node.type || node.idlType) + '' + (node.name ? ' ' + node.name : '') + '' + (reason ? ' (' + reason + ')' : '') + ' */');
+function formatIdlAst(ast) {
+    return _rx2['default'].Observable.of(ast).map(function (x) {
+        return JSON.stringify(x, null, 4);
+    });
 }
 
 module.exports = exports['default'];
-//# sourceMappingURL=notImplemented.js.map
+//# sourceMappingURL=formatIdlAst.js.map
