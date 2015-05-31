@@ -6,7 +6,7 @@ import pkg from '../../package.json';
 
 import processIdlFiles from './actions/processIdlFiles';
 
-var program = new commander.Command('webidl-to-flow');
+var program = new commander.Command('webidl2');
 
 program
     .version(pkg.version)

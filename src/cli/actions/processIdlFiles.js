@@ -3,12 +3,24 @@ import fs from 'fs';
 import Rx from 'rx';
 import RxNode from 'rx-node';
 import parseIdlSource from '../../parseIdlSource';
-import translateIdlAst from '../../translateIdlAst';
+import formatIdlAst from '../../formatIdlAst';
 
 import rxGlob from '../../rx-glob';
 import stream from 'stream';
 import request from 'request';
 import url from 'url';
+
+function formatError(err) {
+    if (err.stack)
+        return err.stack;
+    if (err.message && err.line)
+        return JSON.stringify({
+            message: err.message,
+            line: err.line
+        }, null, 4);
+    else
+        return err;
+}
 
 export
 default
@@ -35,6 +47,9 @@ function processIdlFiles(inputs: Array < string > ): void {
                 .toArray().map(arr => arr.join(""));
         })
         .concatMap(parseIdlSource)
-        .concatMap(translateIdlAst)
-        .forEach(s => process.stdout.write(s), err => console.error(err.stack || err), () => process.stdout.write('\n\n'));
+        .concatMap(formatIdlAst)
+        .forEach(s => process.stdout.write(s),
+            err => {
+                process.stderr.write(formatError(err));
+            }, () => process.stdout.write('\n\n'));
 }

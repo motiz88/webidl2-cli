@@ -27,9 +27,9 @@ var _parseIdlSource = require('../../parseIdlSource');
 
 var _parseIdlSource2 = _interopRequireDefault(_parseIdlSource);
 
-var _translateIdlAst = require('../../translateIdlAst');
+var _formatIdlAst = require('../../formatIdlAst');
 
-var _translateIdlAst2 = _interopRequireDefault(_translateIdlAst);
+var _formatIdlAst2 = _interopRequireDefault(_formatIdlAst);
 
 var _rxGlob = require('../../rx-glob');
 
@@ -47,6 +47,14 @@ var _url = require('url');
 
 var _url2 = _interopRequireDefault(_url);
 
+function formatError(err) {
+    if (err.stack) return err.stack;
+    if (err.message && err.line) return JSON.stringify({
+        message: err.message,
+        line: err.line
+    }, null, 4);else return err;
+}
+
 function processIdlFiles(inputs) {
     _rx2['default'].Observable.from(inputs).concatMap(function (input) {
         if (input === '-') return _rx2['default'].Observable.of(process.stdin);else {
@@ -63,10 +71,10 @@ function processIdlFiles(inputs) {
         return _rxNode2['default'].fromReadableStream(readable).toArray().map(function (arr) {
             return arr.join('');
         });
-    }).concatMap(_parseIdlSource2['default']).concatMap(_translateIdlAst2['default']).forEach(function (s) {
+    }).concatMap(_parseIdlSource2['default']).concatMap(_formatIdlAst2['default']).forEach(function (s) {
         return process.stdout.write(s);
     }, function (err) {
-        return console.error(err.stack || err);
+        process.stderr.write(formatError(err));
     }, function () {
         return process.stdout.write('\n\n');
     });

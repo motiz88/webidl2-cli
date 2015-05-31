@@ -192,7 +192,7 @@ type IdlField = IdlDictionaryField | IdlExceptionField;
 
 
 
-declare module 'webidl2' {
+declare module '@motiz88/webidl2' {
 
     declare
 

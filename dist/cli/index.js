@@ -18,7 +18,7 @@ var _actionsProcessIdlFiles = require('./actions/processIdlFiles');
 
 var _actionsProcessIdlFiles2 = _interopRequireDefault(_actionsProcessIdlFiles);
 
-var program = new _commander2['default'].Command('webidl-to-flow');
+var program = new _commander2['default'].Command('webidl2');
 
 program.version(_packageJson2['default'].version).arguments('<idlFiles...>').action(_actionsProcessIdlFiles2['default']);
 
