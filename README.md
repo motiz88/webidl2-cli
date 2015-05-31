@@ -3,8 +3,16 @@ A frontend for the webidl2.js parser, running the [`@motiz88/webidl2`](https://w
 
 It emits the parse tree as JSON on `stdout`, and errors (also as JSON, if they're parser errors) on `stderr`.
 
+## Installing
+
 ```
-  Usage: webidl2 [options] <idlFiles...>
+npm install -g webidl2-cli
+```
+
+## Usage
+
+```
+  webidl2 [options] <idlFiles...>
 
   Options:
 

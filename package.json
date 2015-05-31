@@ -6,6 +6,7 @@
     "bin": {
         "webidl2": "dist/cli/index.js"
     },
+    "preferGlobal": true,
     "scripts": {
         "test": "mocha"
     },
