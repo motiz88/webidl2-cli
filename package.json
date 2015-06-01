@@ -1,6 +1,6 @@
 {
   "name": "webidl2-cli",
-  "version": "2.0.11",
+  "version": "2.0.13",
   "description": "A frontend for the webidl2.js parser",
   "main": "dist/cli/index.js",
   "bin": {
