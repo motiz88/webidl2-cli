@@ -25,7 +25,12 @@ function formatError(err) {
 export
 default
 
-function processIdlFiles(inputs: Array < string > ): void {
+function processIdlFiles(inputs: Array < string >, command): void {
+    var options = {
+        allowNestedTypedefs: command.allowNestedTypedefs,
+        allowClass: command.allowClass,
+        allowExtends: command.allowExtends,
+    };
     Rx.Observable.from(inputs)
         .concatMap(input => {
             if (input === '-')
@@ -46,7 +51,7 @@ function processIdlFiles(inputs: Array < string > ): void {
             return RxNode.fromReadableStream(readable)
                 .toArray().map(arr => arr.join(""));
         })
-        .concatMap(parseIdlSource)
+        .concatMap(src => parseIdlSource(src, options))
         .concatMap(formatIdlAst)
         .forEach(s => process.stdout.write(s),
             err => {

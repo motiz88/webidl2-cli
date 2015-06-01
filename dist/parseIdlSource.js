@@ -20,10 +20,10 @@ var _motiz88Webidl2 = require('@motiz88/webidl2');
 
 var _motiz88Webidl22 = _interopRequireDefault(_motiz88Webidl2);
 
-function parseIdlSource(idlSource) {
+function parseIdlSource(idlSource, options) {
 	return _rx2['default'].Observable.create(function (observer) {
 		try {
-			observer.onNext(_motiz88Webidl22['default'].parse(idlSource, { allowNestedTypedefs: true }));
+			observer.onNext(_motiz88Webidl22['default'].parse(idlSource, options));
 		} catch (e) {
 			observer.onError(e);
 		}

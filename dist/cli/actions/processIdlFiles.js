@@ -55,7 +55,11 @@ function formatError(err) {
     }, null, 4);else return err;
 }
 
-function processIdlFiles(inputs) {
+function processIdlFiles(inputs, command) {
+    var options = {
+        allowNestedTypedefs: command.allowNestedTypedefs,
+        allowClass: command.allowClass,
+        allowExtends: command.allowExtends };
     _rx2['default'].Observable.from(inputs).concatMap(function (input) {
         if (input === '-') return _rx2['default'].Observable.of(process.stdin);else {
             var inputUrl = _url2['default'].parse(input);
@@ -71,7 +75,9 @@ function processIdlFiles(inputs) {
         return _rxNode2['default'].fromReadableStream(readable).toArray().map(function (arr) {
             return arr.join('');
         });
-    }).concatMap(_parseIdlSource2['default']).concatMap(_formatIdlAst2['default']).forEach(function (s) {
+    }).concatMap(function (src) {
+        return (0, _parseIdlSource2['default'])(src, options);
+    }).concatMap(_formatIdlAst2['default']).forEach(function (s) {
         return process.stdout.write(s);
     }, function (err) {
         process.stderr.write(formatError(err));
